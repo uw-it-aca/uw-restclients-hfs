@@ -22,8 +22,7 @@ setup(
     author="UW-IT AXDD",
     author_email="aca-it@uw.edu",
     include_package_data=True,
-    install_requires=['commonconf',
-                      'urllib3'],
+    install_requires=['simplejson'],
     license='Apache License, Version 2.0',
     description=('A library for connecting to HFS services at the University '
                  'of Washington'),
