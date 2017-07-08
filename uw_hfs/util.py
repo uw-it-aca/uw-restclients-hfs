@@ -1,5 +1,10 @@
 from datetime import datetime, timedelta
+from restclients_core.util.decorators import use_mock
+from uw_hfs.dao import Hfs_DAO
 import re
+
+
+fdao_hfs_override = use_mock(Hfs_DAO())
 
 
 def is_today(adatetime):
