@@ -8,6 +8,7 @@ from uw_hfs.dao import Hfs_DAO
 from restclients_core.exceptions import DataFailureException
 
 
+DAO = Hfs_DAO()
 ERROR_MSG = "An error has occurred"
 INVALID_ID_MSG = "not found in IDCard Database"
 INVALID_PARAM_MSG = "Input for this method must be either"
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_resource(url):
-    response = Hfs_DAO().getURL(url, {})
+    response = DAO.getURL(url, {})
     logger.info("%s ==status==> %s" % (url, response.status))
 
     if response.status != 200:
