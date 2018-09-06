@@ -19,21 +19,23 @@ def get_resource(url):
     response = DAO.getURL(url, {})
     logger.debug("%s ==status==> %s", url, response.status)
 
+    response_data = str(response.data)
+
     if response.status != 200:
-        raise DataFailureException(url, response.status, response.data)
+        raise DataFailureException(url, response.status, response_data)
 
     # 'Bug' with lib API causing requests with no/invalid user to return a 200
-    if INVALID_PARAM_MSG in response.data:
+    if INVALID_PARAM_MSG in response_data:
         json_data = json.loads(response.data)
-        raise DataFailureException(url, 400, str(json_data["Message"]))
+        raise DataFailureException(url, 400, json_data["Message"])
 
-    if INVALID_ID_MSG in response.data:
+    if INVALID_ID_MSG in response_data:
         json_data = json.loads(response.data)
-        raise DataFailureException(url, 404, str(json_data["Message"]))
+        raise DataFailureException(url, 404, json_data["Message"])
 
-    if ERROR_MSG in response.data:
+    if ERROR_MSG in response_data:
         json_data = json.loads(response.data)
-        raise DataFailureException(url, 500, str(json_data["Message"]))
+        raise DataFailureException(url, 500, json_data["Message"])
 
     try:
         logger.debug("%s ==data==> %s", url, response.data.decode('utf-8'))
