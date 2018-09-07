@@ -1,5 +1,4 @@
 from unittest import TestCase
-from decimal import Decimal
 from datetime import datetime
 from restclients_core.exceptions import DataFailureException
 from uw_hfs.idcard import get_hfs_accounts
@@ -14,7 +13,7 @@ class TestHFSAccounts(TestCase):
         self.assertEquals(hfs_acc.student_husky_card.last_updated,
                           datetime(2014, 6, 2, 15, 17, 16))
         self.assertEquals(hfs_acc.student_husky_card.balance,
-                          Decimal('1.23'))
+                          1.23)
         self.assertEquals(
             hfs_acc.student_husky_card.add_funds_url,
             ADD_FUND_URL)
@@ -22,13 +21,13 @@ class TestHFSAccounts(TestCase):
         self.assertEquals(hfs_acc.employee_husky_card.last_updated,
                           datetime(2014, 5, 19, 14, 16, 26))
         self.assertEquals(hfs_acc.employee_husky_card.balance,
-                          Decimal('0.56'))
+                          0.56)
         self.assertEquals(hfs_acc.employee_husky_card.add_funds_url,
                           ADD_FUND_URL)
 
         self.assertEquals(hfs_acc.resident_dining.last_updated,
                           datetime(2014, 6, 1, 13, 15, 36))
-        self.assertEquals(hfs_acc.resident_dining.balance, Decimal('7.89'))
+        self.assertEquals(hfs_acc.resident_dining.balance, 7.89)
         self.assertEquals(hfs_acc.resident_dining.add_funds_url,
                           ADD_FUND_URL)
 
@@ -43,12 +42,12 @@ class TestHFSAccounts(TestCase):
         self.assertIsNotNone(hfs_acc.student_husky_card)
         self.assertIsNone(hfs_acc.student_husky_card.last_updated)
         self.assertEquals(hfs_acc.student_husky_card.balance,
-                          Decimal('0.0'))
+                          0.0)
 
         self.assertIsNone(hfs_acc.employee_husky_card)
 
         self.assertEquals(hfs_acc.resident_dining.balance,
-                          Decimal('777.89'))
+                          777.89)
         self.assertEquals(hfs_acc.resident_dining.last_updated,
                           datetime(2014, 5, 17, 13, 15, 36))
         self.assertEquals(hfs_acc.resident_dining.add_funds_url,
@@ -87,4 +86,4 @@ class TestHFSAccounts(TestCase):
     def test_float_parsing(self):
         hfs_acc = get_hfs_accounts("jbothell")
         self.assertEquals(hfs_acc.student_husky_card.balance,
-                          Decimal('5.1'))
+                          5.1)
