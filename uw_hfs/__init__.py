@@ -17,10 +17,9 @@ logger = logging.getLogger(__name__)
 
 def get_resource(url):
     response = DAO.getURL(url, {})
-    logger.debug("%s ==status==> %s", url, response.status)
+    logger.debug("{} ==status==> {}".format(url, response.status))
 
     response_data = str(response.data)
-
     if response.status != 200:
         raise DataFailureException(url, response.status, response_data)
 
@@ -38,10 +37,10 @@ def get_resource(url):
         raise DataFailureException(url, 500, json_data["Message"])
 
     try:
-        logger.debug("%s ==data==> %s", url, response.data.decode('utf-8'))
+        logger.debug("{} ==data==> {}".format(
+            url, response_data.decode('utf-8')))
     except Exception as ex:
         # MUWM-2414
-        logger.debug(
-            "%s ==data==> Data not decodable to log file: %s", url, str(ex))
-
+        logger.debug("{} ==data==> Data not decodable to log file: {}".format(
+            url, str(ex)))
     return response.data
