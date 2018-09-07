@@ -43,5 +43,4 @@ def get_resource(url):
         # MUWM-2414
         logger.debug("{} ==data==> Data not decodable to log file: {}".format(
             url, str(ex)))
-
     return response.data

@@ -10,6 +10,7 @@ from uw_hfs.models import (StudentHuskyCardAccout, EmployeeHuskyCardAccount,
                            ResidentDiningAccount, HfsAccouts)
 from uw_hfs import get_resource
 
+
 url_prefix = "/myuw/v1/"
 logger = logging.getLogger(__name__)
 
