@@ -2,80 +2,45 @@ from restclients_core import models
 from uw_hfs.util import past_datetime_str
 
 
-def get_timestamp_str(last_updated_datetime,
-                      use_custom_date_format):
-    if last_updated_datetime is None:
-        return None
-    if use_custom_date_format:
-        return past_datetime_str(last_updated_datetime)
-    else:
-        return str(last_updated_datetime)
+class HFSAccount(models.Model):
+    balance = models.DecimalField(max_digits=8, decimal_places=2)
+    last_updated = models.DateTimeField(null=True, default=None)
+    add_funds_url = models.CharField(max_length=80)
 
+    def get_timestamp_str(self, use_custom_date_format=False):
+        if self.last_updated is not None:
+            if use_custom_date_format:
+                return past_datetime_str(self.last_updated)
+            else:
+                return str(self.last_updated)
 
-def hfs_account_json_data(account,
-                          use_custom_date_format):
-    return {'balance': account.balance,
-            'last_updated': get_timestamp_str(account.last_updated,
+    def json_data(self, use_custom_date_format=False):
+        return {
+            'balance': self.balance,
+            'last_updated': get_timestamp_str(self.last_updated,
                                               use_custom_date_format),
-            'add_funds_url': account.add_funds_url
-            }
-
-
-def hfs_account_str(account):
-    return "{last_updated: %s, balance: %.2f, add_funds_url: %s}" % (
-        account.last_updated, account.balance, account.add_funds_url)
-
-
-class StudentHuskyCardAccout(models.Model):
-    balance = models.DecimalField(max_digits=8,
-                                  decimal_places=2
-                                  )
-    last_updated = models.DateTimeField(null=True,
-                                        default=None)
-    add_funds_url = models.CharField(max_length=80)
-
-    def json_data(self, use_custom_date_format=False):
-        return hfs_account_json_data(self,
-                                     use_custom_date_format)
+            'add_funds_url': self.add_funds_url
+        }
 
     def __str__(self):
-        return hfs_account_str(self)
+        return "last_updated: {}, balance: {0:.2f}, add_funds_url: {}".format(
+            self.last_updated, self.balance, self.add_funds_url)
 
 
-class EmployeeHuskyCardAccount(models.Model):
-    balance = models.DecimalField(max_digits=8,
-                                  decimal_places=2
-                                  )
-    last_updated = models.DateTimeField(null=True,
-                                        default=None)
-    add_funds_url = models.CharField(max_length=80)
-
-    def json_data(self, use_custom_date_format=False):
-        return hfs_account_json_data(self,
-                                     use_custom_date_format)
-
-    def __str__(self):
-        return hfs_account_str(self)
+class StudentHuskyCardAccount(HFSAccount):
+    pass
 
 
-class ResidentDiningAccount(models.Model):
-    balance = models.DecimalField(max_digits=8,
-                                  decimal_places=2
-                                  )
-    last_updated = models.DateTimeField(null=True,
-                                        default=None)
-    add_funds_url = models.CharField(max_length=80)
-
-    def json_data(self, use_custom_date_format=False):
-        return hfs_account_json_data(self,
-                                     use_custom_date_format)
-
-    def __str__(self):
-        return hfs_account_str(self)
+class EmployeeHuskyCardAccount(HFSAccount):
+    pass
 
 
-class HfsAccouts(models.Model):
-    student_husky_card = models.ForeignKey(StudentHuskyCardAccout,
+class ResidentDiningAccount(HFSAccount):
+    pass
+
+
+class HfsAccounts(models.Model):
+    student_husky_card = models.ForeignKey(StudentHuskyCardAccount,
                                            on_delete=models.PROTECT,
                                            null=True,
                                            default=None

@@ -6,32 +6,33 @@ This is the interface for interacting with the HFS Web Service.
 from datetime import datetime
 import logging
 import json
-from uw_hfs.models import (StudentHuskyCardAccout, EmployeeHuskyCardAccount,
-                           ResidentDiningAccount, HfsAccouts)
+from uw_hfs.models import (
+    StudentHuskyCardAccount, EmployeeHuskyCardAccount, ResidentDiningAccount,
+    HfsAccounts)
 from uw_hfs import get_resource
 
 
-url_prefix = "/myuw/v1/"
+ACCOUNTS_URL = "/myuw/v1/{uwnetid}"
 logger = logging.getLogger(__name__)
 
 
 def get_hfs_accounts(netid):
     """
-    Return a restclients.models.hfs.HfsAccoutsThe object on the given uwnetid
+    Return a restclients.models.hfs.HfsAccounts object on the given uwnetid
     """
-    url = "%s%s" % (url_prefix, netid)
+    url = ACCOUNTS_URL.format(uwnetid=netid)
     response = get_resource(url)
     return _object_from_json(response)
 
 
 def _object_from_json(response_body):
-    return_obj = HfsAccouts()
+    return_obj = HfsAccounts()
     json_data = json.loads(response_body)
 
     if json_data.get('student_husky_card') is not None:
         return_obj.student_husky_card = _load_acc_obj(
             json_data['student_husky_card'],
-            StudentHuskyCardAccout())
+            StudentHuskyCardAccount())
 
     if json_data.get('resident_dining') is not None:
         return_obj.resident_dining = _load_acc_obj(
