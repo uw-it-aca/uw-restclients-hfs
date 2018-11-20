@@ -32,36 +32,36 @@ def past_datetime_str(adatetime):
     then after another 365 days "Over 2 years ago", etc
     """
     if is_today(adatetime):
-        return "today at %s" % time_str(adatetime)
+        return "today at {}".format(time_str(adatetime))
 
     if last_midnight() - adatetime <= timedelta(days=7):
         for day in xrange(1, 8):
             if is_days_ago(adatetime, day):
                 if day == 1:
-                    return "yesterday at %s" % time_str(adatetime)
+                    return "yesterday at {}".format(time_str(adatetime))
                 if day == 7:
                     return "1 week ago"
-                return "%d days ago" % day
+                return "{:.0f} days ago".format(day)
 
     if last_midnight() - adatetime <= timedelta(days=28):
         week = get_past_weeks_count(adatetime)
         if week == 1:
-            return "over %d week ago" % week
+            return "over {:.0f} week ago".format(week)
         else:
-            return "over %d weeks ago" % week
+            return "over {:.0f} weeks ago".format(week)
 
     if last_midnight() - adatetime <= timedelta(days=365):
         month = get_past_months_count(adatetime)
         if month == 1:
-            return "over %d month ago" % month
+            return "over {:.0f} month ago".format(month)
         else:
-            return "over %d months ago" % month
+            return "over {:.0f} months ago".format(month)
 
     year = get_past_years_count(adatetime)
     if year == 1:
-        return "over %d year ago" % year
+        return "over {:.0f} year ago".format(year)
     else:
-        return "over %d years ago" % year
+        return "over {:.0f} years ago".format(year)
 
 
 def is_days_ago(adatetime, days):
