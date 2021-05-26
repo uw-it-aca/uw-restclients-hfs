@@ -1,4 +1,11 @@
-[![Build Status](https://api.travis-ci.org/uw-it-aca/uw-restclients-hfs.svg?branch=master)](https://travis-ci.org/uw-it-aca/uw-restclients-hfs)
-[![Coverage Status](https://coveralls.io/repos/uw-it-aca/uw-restclients-hfs/badge.png?branch=master)](https://coveralls.io/r/uw-it-aca/uw-restclients-hfs?branch=master)
+# REST client for the UW HFS API
 
-# uw-restclients-hfs
+[![Build Status](https://github.com/uw-it-aca/uw-restclients-hfs/workflows/tests/badge.svg?branch=main)](https://github.com/uw-it-aca/uw-restclients-hfs/actions)
+[![Coverage Status](https://coveralls.io/repos/uw-it-aca/uw-restclients-hfs/badge.svg?branch=main)](https://coveralls.io/r/uw-it-aca/uw-restclients-hfs?branch=main)
+[![PyPi Version](https://img.shields.io/pypi/v/uw-restclients-hfs.svg)](https://pypi.python.org/pypi/uw-restclients-hfs)
+![Python versions](https://img.shields.io/pypi/pyversions/uw-restclients-hfs.svg)
+
+
+Installation:
+
+    pip install UW-RestClients-HFS
