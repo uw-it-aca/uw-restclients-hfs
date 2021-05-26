@@ -1,3 +1,6 @@
+# Copyright 2021 UW-IT, University of Washington
+# SPDX-License-Identifier: Apache-2.0
+
 from datetime import datetime, timedelta
 from restclients_core.util.decorators import use_mock
 from uw_hfs.dao import Hfs_DAO
