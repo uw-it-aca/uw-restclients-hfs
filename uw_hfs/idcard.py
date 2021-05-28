@@ -6,14 +6,13 @@
 This is the interface for interacting with the HFS Web Service.
 """
 
-from datetime import datetime
 import logging
 import json
+from dateutil.parser import parse
 from uw_hfs.models import (
     StudentHuskyCardAccount, EmployeeHuskyCardAccount, ResidentDiningAccount,
     HfsAccounts)
 from uw_hfs import get_resource
-
 
 ACCOUNTS_URL = "/myuw/v1/{uwnetid}"
 logger = logging.getLogger(__name__)
@@ -55,15 +54,12 @@ def _object_from_json(response_body):
 
 
 def _load_acc_obj(account_data, account_obj):
-    account_obj.balance = account_data['balance']
-    last_transaction_date = account_data.get('last_transaction_date')
-    if last_transaction_date is None:
-        account_obj.last_updated = None
-    else:
-        account_obj.last_updated = get_last_updated(last_transaction_date)
-    account_obj.add_funds_url = account_data['add_funds_url']
+    account_obj.balance = account_data.get('balance')
+    account_obj.last_updated = _str_to_datetime(
+        account_data.get('last_transaction_date'))
+    account_obj.add_funds_url = account_data.get('add_funds_url')
     return account_obj
 
 
-def get_last_updated(data):
-    return datetime.strptime(data[0:19], "%Y-%m-%dT%H:%M:%S")
+def _str_to_datetime(s):
+    return parse(s) if (s is not None and len(s)) else None

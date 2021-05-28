@@ -1,6 +1,7 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import json
 from restclients_core import models
 from uw_hfs.util import past_datetime_str
 
@@ -10,7 +11,7 @@ class HFSAccount(models.Model):
     last_updated = models.DateTimeField(null=True, default=None)
     add_funds_url = models.CharField(max_length=80)
 
-    def get_timestamp_str(self, use_custom_date_format=False):
+    def get_timestamp_str(self, use_custom_date_format):
         if self.last_updated is not None:
             if use_custom_date_format:
                 return past_datetime_str(self.last_updated)
@@ -20,14 +21,14 @@ class HFSAccount(models.Model):
     def json_data(self, use_custom_date_format=False):
         return {
             'balance': self.balance,
-            'last_updated': get_timestamp_str(self.last_updated,
-                                              use_custom_date_format),
+            'last_updated_dtime': (str(self.last_updated) if
+                                   self.last_updated else None),
+            'last_updated': self.get_timestamp_str(use_custom_date_format),
             'add_funds_url': self.add_funds_url
         }
 
     def __str__(self):
-        return "last_updated: {}, balance: {0:.2f}, add_funds_url: {}".format(
-            self.last_updated, self.balance, self.add_funds_url)
+        return json.dumps(self.json_data())
 
 
 class StudentHuskyCardAccount(HFSAccount):
