@@ -13,6 +13,14 @@ ADD_FUND_URL = ("https://www.hfs.washington.edu"
 class TestHFSAccounts(TestCase):
     def test_get_accounts(self):
         hfs_acc = get_hfs_accounts("javerage")
+        self.assertEquals(
+            hfs_acc.student_husky_card.json_data(True),
+            {'add_funds_url': ('https://www.hfs.washington.edu/' +
+                               'olco/Secure/AccountSummary.aspx'),
+             'balance': 1.23,
+             'last_updated': 'over 6 years ago',
+             'last_updated_dtime': '2014-06-02 15:17:16'})
+        self.assertIsNotNone(str(hfs_acc.student_husky_card))
         self.assertEquals(hfs_acc.student_husky_card.last_updated,
                           datetime(2014, 6, 2, 15, 17, 16))
         self.assertEquals(hfs_acc.student_husky_card.balance, 1.23)
