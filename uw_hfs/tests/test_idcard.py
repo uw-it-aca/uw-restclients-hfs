@@ -13,6 +13,7 @@ ADD_FUND_URL = ("https://www.hfs.washington.edu"
 class TestHFSAccounts(TestCase):
     def test_get_accounts(self):
         hfs_acc = get_hfs_accounts("javerage")
+        self.assertIsNotNone(hfs_acc.json_data(True))
         self.assertEquals(
             hfs_acc.student_husky_card.json_data(True),
             {'add_funds_url': ('https://www.hfs.washington.edu/' +
