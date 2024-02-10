@@ -21,22 +21,22 @@ class TestHFSAccounts(TestCase):
         self.assertIsNotNone('last_updated_dtime' in data)
         self.assertIsNotNone(str(hfs_acc.student_husky_card))
         self.assertEqual(hfs_acc.student_husky_card.last_updated,
-                          datetime(2014, 6, 2, 15, 17, 16))
+                         datetime(2014, 6, 2, 15, 17, 16))
         self.assertEqual(hfs_acc.student_husky_card.balance, 1.23)
         self.assertEqual(hfs_acc.student_husky_card.add_funds_url,
-                          ADD_FUND_URL)
+                         ADD_FUND_URL)
 
         self.assertEqual(hfs_acc.employee_husky_card.last_updated,
-                          datetime(2014, 5, 19, 14, 16, 26))
+                         datetime(2014, 5, 19, 14, 16, 26))
         self.assertEqual(hfs_acc.employee_husky_card.balance, 0.56)
         self.assertEqual(hfs_acc.employee_husky_card.add_funds_url,
-                          ADD_FUND_URL)
+                         ADD_FUND_URL)
 
         self.assertEqual(hfs_acc.resident_dining.last_updated,
-                          datetime(2014, 6, 1, 13, 15, 36))
+                         datetime(2014, 6, 1, 13, 15, 36))
         self.assertEqual(hfs_acc.resident_dining.balance, 7.89)
         self.assertEqual(hfs_acc.resident_dining.add_funds_url,
-                          ADD_FUND_URL)
+                         ADD_FUND_URL)
 
     def test_get_hfs_empty_account(self):
         hfs_acc = get_hfs_accounts("eight")
@@ -54,9 +54,9 @@ class TestHFSAccounts(TestCase):
 
         self.assertEqual(hfs_acc.resident_dining.balance, 777.89)
         self.assertEqual(hfs_acc.resident_dining.last_updated,
-                          datetime(2014, 5, 17, 13, 15, 36))
+                         datetime(2014, 5, 17, 13, 15, 36))
         self.assertEqual(hfs_acc.resident_dining.add_funds_url,
-                          ADD_FUND_URL)
+                         ADD_FUND_URL)
 
     def test_invalid_user(self):
         # Testing error message in a 200 response
@@ -70,13 +70,13 @@ class TestHFSAccounts(TestCase):
         except DataFailureException as ex:
             self.assertEqual(ex.status, 500)
             self.assertEqual(ex.msg,
-                              "An error has occurred.")
+                             "An error has occurred.")
         try:
             get_hfs_accounts("none")
         except DataFailureException as ex:
             self.assertEqual(ex.status, 404)
             self.assertEqual(ex.msg,
-                              "UWNetID none not found in IDCard Database.")
+                             "UWNetID none not found in IDCard Database.")
 
         MSG = ("Input for this method must be either a valid UWNetID "
                "or two nine-digit Student and "
@@ -90,5 +90,4 @@ class TestHFSAccounts(TestCase):
 
     def test_float_parsing(self):
         hfs_acc = get_hfs_accounts("jbothell")
-        self.assertEqual(hfs_acc.student_husky_card.balance,
-                          5.1)
+        self.assertEqual(hfs_acc.student_husky_card.balance, 5.1)
