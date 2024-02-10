@@ -1,4 +1,4 @@
-# Copyright 2023 UW-IT, University of Washington
+# Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 from unittest import TestCase
@@ -20,23 +20,23 @@ class TestHFSAccounts(TestCase):
         self.assertIsNotNone('last_updated' in data)
         self.assertIsNotNone('last_updated_dtime' in data)
         self.assertIsNotNone(str(hfs_acc.student_husky_card))
-        self.assertEquals(hfs_acc.student_husky_card.last_updated,
-                          datetime(2014, 6, 2, 15, 17, 16))
-        self.assertEquals(hfs_acc.student_husky_card.balance, 1.23)
-        self.assertEquals(hfs_acc.student_husky_card.add_funds_url,
-                          ADD_FUND_URL)
+        self.assertEqual(hfs_acc.student_husky_card.last_updated,
+                         datetime(2014, 6, 2, 15, 17, 16))
+        self.assertEqual(hfs_acc.student_husky_card.balance, 1.23)
+        self.assertEqual(hfs_acc.student_husky_card.add_funds_url,
+                         ADD_FUND_URL)
 
-        self.assertEquals(hfs_acc.employee_husky_card.last_updated,
-                          datetime(2014, 5, 19, 14, 16, 26))
-        self.assertEquals(hfs_acc.employee_husky_card.balance, 0.56)
-        self.assertEquals(hfs_acc.employee_husky_card.add_funds_url,
-                          ADD_FUND_URL)
+        self.assertEqual(hfs_acc.employee_husky_card.last_updated,
+                         datetime(2014, 5, 19, 14, 16, 26))
+        self.assertEqual(hfs_acc.employee_husky_card.balance, 0.56)
+        self.assertEqual(hfs_acc.employee_husky_card.add_funds_url,
+                         ADD_FUND_URL)
 
-        self.assertEquals(hfs_acc.resident_dining.last_updated,
-                          datetime(2014, 6, 1, 13, 15, 36))
-        self.assertEquals(hfs_acc.resident_dining.balance, 7.89)
-        self.assertEquals(hfs_acc.resident_dining.add_funds_url,
-                          ADD_FUND_URL)
+        self.assertEqual(hfs_acc.resident_dining.last_updated,
+                         datetime(2014, 6, 1, 13, 15, 36))
+        self.assertEqual(hfs_acc.resident_dining.balance, 7.89)
+        self.assertEqual(hfs_acc.resident_dining.add_funds_url,
+                         ADD_FUND_URL)
 
     def test_get_hfs_empty_account(self):
         hfs_acc = get_hfs_accounts("eight")
@@ -48,15 +48,15 @@ class TestHFSAccounts(TestCase):
         hfs_acc = get_hfs_accounts("jnew")
         self.assertIsNotNone(hfs_acc.student_husky_card)
         self.assertIsNone(hfs_acc.student_husky_card.last_updated)
-        self.assertEquals(hfs_acc.student_husky_card.balance, 0.0)
+        self.assertEqual(hfs_acc.student_husky_card.balance, 0.0)
 
         self.assertIsNone(hfs_acc.employee_husky_card)
 
-        self.assertEquals(hfs_acc.resident_dining.balance, 777.89)
-        self.assertEquals(hfs_acc.resident_dining.last_updated,
-                          datetime(2014, 5, 17, 13, 15, 36))
-        self.assertEquals(hfs_acc.resident_dining.add_funds_url,
-                          ADD_FUND_URL)
+        self.assertEqual(hfs_acc.resident_dining.balance, 777.89)
+        self.assertEqual(hfs_acc.resident_dining.last_updated,
+                         datetime(2014, 5, 17, 13, 15, 36))
+        self.assertEqual(hfs_acc.resident_dining.add_funds_url,
+                         ADD_FUND_URL)
 
     def test_invalid_user(self):
         # Testing error message in a 200 response
@@ -68,15 +68,15 @@ class TestHFSAccounts(TestCase):
         try:
             get_hfs_accounts("jerror")
         except DataFailureException as ex:
-            self.assertEquals(ex.status, 500)
-            self.assertEquals(ex.msg,
-                              "An error has occurred.")
+            self.assertEqual(ex.status, 500)
+            self.assertEqual(ex.msg,
+                             "An error has occurred.")
         try:
             get_hfs_accounts("none")
         except DataFailureException as ex:
-            self.assertEquals(ex.status, 404)
-            self.assertEquals(ex.msg,
-                              "UWNetID none not found in IDCard Database.")
+            self.assertEqual(ex.status, 404)
+            self.assertEqual(ex.msg,
+                             "UWNetID none not found in IDCard Database.")
 
         MSG = ("Input for this method must be either a valid UWNetID "
                "or two nine-digit Student and "
@@ -84,11 +84,10 @@ class TestHFSAccounts(TestCase):
         try:
             get_hfs_accounts("invalidnetid")
         except DataFailureException as ex:
-            self.assertEquals(ex.status, 400)
-            self.assertEquals(
+            self.assertEqual(ex.status, 400)
+            self.assertEqual(
                 ex.msg, MSG)
 
     def test_float_parsing(self):
         hfs_acc = get_hfs_accounts("jbothell")
-        self.assertEquals(hfs_acc.student_husky_card.balance,
-                          5.1)
+        self.assertEqual(hfs_acc.student_husky_card.balance, 5.1)
