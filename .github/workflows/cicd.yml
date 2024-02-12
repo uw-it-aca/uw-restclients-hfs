@@ -24,6 +24,7 @@ name: tests
 
 env:
   APP_NAME: uw_hfs
+  COVERAGE_PYTHON_VERSION: '3.10'
 
 on:
   push:
@@ -52,7 +53,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e .
-          pip install commonconf nose2 coverage coveralls==2.2.0
+          pip install commonconf nose2 coverage coveralls==3.3.1
 
       - name: Run Python Linters
         uses: uw-it-aca/actions/python-linters@main
