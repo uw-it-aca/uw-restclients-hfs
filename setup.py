@@ -21,7 +21,7 @@ setup(
     name='UW-RestClients-HFS',
     version=VERSION,
     packages=['uw_hfs'],
-    author="UW-IT T&LS",
+    author="UW-IT SETS",
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
